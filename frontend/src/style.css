@@ -1,0 +1,156 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    background: linear-gradient(90deg, #C5FE52 30%, #A626D3 100%);
+    font-family: 'Playfair Display', serif;
+    
+}
+
+#bg-image{
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    position: absolute;
+    background-image: url("./Images/Logo.jpg");
+    opacity: 0.1;
+}
+
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    padding: 30px 30px;
+    box-shadow: 0px 3px 7.5px rgba(0,0,0,0.1);
+}
+
+.title{
+    min-width: 800px;
+    text-align: center;
+}
+.nav-logo{
+    width: 70px;
+}
+
+.nav-items{
+    color: #9F2AF6;
+    list-style: none;
+    display: flex;
+}
+
+.navLink{
+    padding: 10px;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+}
+
+.quoteBlock{
+    margin: 0 auto;
+    width: 30%;
+}
+
+.quote{
+    text-align: left;
+}
+
+.author{
+    text-align: right;
+    padding-bottom: 50px;
+    font-style: italic;
+    font-size: 10px;
+}
+
+.cardStats{
+    width:25vw;
+}
+
+.singleCell{
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.cardimage{
+    width: 50%;
+    border-radius: 9px;
+}
+
+.soldOutBadge{
+    position: absolute;
+    top: 6px;
+    left: 70px;
+    background-color: white;
+    padding: 2px 7px;
+    font-weight: bold;
+    font-size: 1px;
+}
+.ratingLine{
+    min-width:200px;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.stars{
+    display: inline-block;
+}
+
+.price{
+    padding-left: 10px;
+}
+
+.forumContainer{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.usernameContainer{
+    justify-self: center;
+    margin-left: 20px;
+}
+
+.usernameForm{
+    display: grid;
+    /* 2 rows, each 40px in height */
+    grid-template: 40px 40px / 1fr;
+    width: 10%;
+    gap: 15px;
+
+}
+
+.postsSection{
+    margin: 0 50px;
+}   
+
+.usernamePrompt{
+    font-size: 18px;
+    white-space: nowrap;
+    justify-self: center;
+}
+
+.signInStatus{
+    font-size: 15px;
+    white-space: nowrap;
+    justify-self: center;
+}
+
+.signInButton{
+    width: 50%;
+    justify-self: center;
+}
+
+.submitButton{
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.clickableButton{
+    border-radius: 10px;
+}
