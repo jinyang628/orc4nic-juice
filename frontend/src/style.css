@@ -154,3 +154,20 @@ body{
 .clickableButton{
     border-radius: 10px;
 }
+
+.showUsername{
+    display: inline-block;
+}
+
+.btnEdit{
+    color:#A626D3;
+    background-color: #C5FE52;
+}
+
+.filterTags{
+    margin-top:20px;
+}
+
+.formInput{
+    padding-left: 10px;
+}

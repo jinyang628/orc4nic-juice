@@ -16,6 +16,7 @@ export interface PostFormData {
         id?: string;
         title: string;
         body: string;
+        username: string;
     }
 }
 
@@ -23,6 +24,7 @@ export interface PostState {
     id?: number;
     title?: string;
     body?: string;
+    username?: string;
     created_at?: any;
     updated_at?: any;
 }
@@ -49,6 +51,7 @@ const initialState: PostsState = {
             id: 0,
             title: "",
             body: "",
+            username: "",
             created_at: "",
             updated_at: "",
         }

@@ -18,13 +18,18 @@ export async function fetchPosts() {
 
 export async function createPost(payload: PostFormData) {
   const post = payload.post;
+  //DELETE AFTER TROUBLESHOOTING: Username correctly recorded
   return fetch(`${API_URL}/posts.json`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      post,
+      post:{
+        title: post.title,
+        body: post.body,
+        username: post.username,
+      }
     }),
   })
     .then((response) => response.json())
@@ -42,7 +47,11 @@ export async function updatePost(payload: PostFormData) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      post,
+      post:{
+        title: post.title,
+        body: post.body,
+        username: post.username,
+      }
     }),
   })
     .then((response) => response.json())

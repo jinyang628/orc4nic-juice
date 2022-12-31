@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {useAppSelector } from "../../app/hooks";
+import { useDispatch} from 'react-redux';
+import { useAppSelector } from "../../app/hooks";
 import Post from './Post';
 import PostForm from './PostForm';
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { fetchPostsAsync, selectPosts, selectStatus, Statuses, updatePostAsync } from './postSlice';
+import TagsSearch from '../search/tagsSearch';
 
 function Posts() {
   const posts = useAppSelector(selectPosts);
   const status = useAppSelector(selectStatus)
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
-
   const [postToEdit, setPostToEdit] = useState(0);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function Posts() {
       if (postToEdit === post_id) {
           setPostToEdit(0);
       } else {
-            setPostToEdit(post_id as number);
+          setPostToEdit(post_id as number);
       }
   }
 
@@ -40,7 +40,9 @@ function Posts() {
   else {
       contents = <div className="card">
         <div className="card-body">
-            <PostForm />
+            
+            <PostForm/>
+            <TagsSearch/>
             {posts && posts.length > 0 && posts.map(post => {
                 return <div key={post.id} style={{margin:"5em"}}>
                     <Post 
@@ -49,6 +51,7 @@ function Posts() {
                         toggleEditForm={() => toggleEditForm(post.id)}
                         postToEdit={postToEdit}
                         submitEdit={submitEdit}
+                        username={post.username}
                     />
                 </div>
             })}

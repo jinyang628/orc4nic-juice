@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {createPostAsync} from './postSlice';
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
 
 function PostForm() {
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
+  const signedIn = useSelector((state: RootState) => state.signedIn);
+  const activeUsername = useSelector((state: RootState) => state.activeUsername);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
@@ -14,6 +17,7 @@ function PostForm() {
       post: {
         title: title,
         body: body,
+        username: activeUsername,
       }
     }
     dispatch(createPostAsync(formData));
@@ -45,6 +49,7 @@ function PostForm() {
       <button
         type="submit"
         className="submitButton clickableButton"
+        disabled={!title || !body || !signedIn}
         onClick={(e) => submitHandler(e)}>Submit</button>
     </form>
   </div>;

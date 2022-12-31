@@ -23,8 +23,18 @@ I hope to build 3 pages:
     - A forum page where the user authentication and CRUD mechanics are implemented
     - A sales page which displays the item on sale that particular day, and links to a telegram bot where users can order the item. 
 
+
+Learning Points
+    - Redux
+        - Redux "lifts" the state up so every single script can access the value of a particular state (overcomes the limitations of React prop)
+        - Store holds all the states in the script (src/app/store)
+        - Reducer is the state (src/features/signIn/signInSlice)
+            - As the application grows, we will have multiple reducers tracking different things
+        - 
 References
     - https://www.youtube.com/watch?v=bMknfKXIFA8
     - https://www.youtube.com/watch?v=ZGnMqKg-Cq4
     - https://www.youtube.com/watch?v=uvB4cUi4RrI
+    - https://www.youtube.com/watch?v=CVpUuw9XSjY
+    
 
