@@ -33,7 +33,6 @@ function Post(props:any) {
 
     const titleElement = <h2 className="title text-start">{props.post.title}</h2>;
     const bodyElement = <p className="card-text text-start">{props.post.body}</p>;
-    const usernameElement = <p className="card-text text-start">{props.post.username}</p>;
 
     const editableTitle = <input 
                             type="text" 

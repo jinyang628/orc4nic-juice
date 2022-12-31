@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import PostForm from '../features/posts/PostForm';
 import { useDispatch } from 'react-redux';
 import { setSignedIn } from '../features/signIn/signInSlice';
 import { setActiveUsername } from '../features/signIn/usernameSlice';

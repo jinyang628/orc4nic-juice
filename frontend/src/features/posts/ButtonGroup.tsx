@@ -18,13 +18,13 @@ function ButtonGroup(props:any) {
   return <div className="btn-group float-end">
       <button 
         className="btn clickableButton btn-warning"
-        disabled={!(activeUsername == props.username)}
-        style={{ visibility: activeUsername == props.username ? 'visible' : 'hidden' }}
+        disabled={!(activeUsername === props.username)}
+        style={{ visibility: activeUsername === props.username ? 'visible' : 'hidden' }}
         onClick={() => props.toggleEditForm()}>Edit</button>
       <button 
         className="btn clickableButton btn-danger" 
-        disabled={!(activeUsername == props.username)}
-        style={{ visibility: activeUsername == props.username ? 'visible' : 'hidden' }}
+        disabled={!(activeUsername === props.username)}
+        style={{ visibility: activeUsername === props.username ? 'visible' : 'hidden' }}
         onClick={(e) => handleClick(e)}>Delete</button>
   </div>;
 }
