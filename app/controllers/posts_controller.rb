@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     # @posts = Post.all
-    @posts = Post.select(:id, :title, :body, :username)
+    @posts = Post.select(:id, :title, :body, :tags, :username)
     render json: @posts
   end
 
@@ -66,6 +66,6 @@ class PostsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:title, :body, :username, :id)
+    params.require(:post).permit(:title, :body, :username, :tags, :id)
   end
 end

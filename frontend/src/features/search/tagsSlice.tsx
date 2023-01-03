@@ -1,13 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const tagsSlice= createSlice({
-    name: 'availableTags',
-    initialState: ['Recipe', 'Orange', 'Apple', 'Cucumber', 'Bitter Gourd'],
+    name: 'activeTags',
+    initialState: [],
     reducers: {
-        chooseTags: (state, action) => action.payload,
+        updateTags: (state, action) => {
+            // return action.payload
+            // console.log('before: ', state);
+            const newState = action.payload;
+            // console.log('after: ', newState);
+            // this is correctly updated as an array 
+            return newState;
+        },
     },
 });
 
-export const { chooseTags } = tagsSlice.actions;
+export const { updateTags } = tagsSlice.actions;
 
 export default tagsSlice.reducer;
+
+

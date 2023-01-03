@@ -4,9 +4,6 @@ import { destroyPostAsync} from './postSlice'
 
 function ButtonGroup(props:any) {
     const activeUsername = useSelector((state: RootState) => state.activeUsername);
-    console.log(activeUsername);
-    console.log(props.username);
-
     function handleClick(e:any) {
         const payload = {
             post: {

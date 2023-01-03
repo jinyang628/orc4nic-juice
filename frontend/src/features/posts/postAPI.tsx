@@ -1,3 +1,4 @@
+import tagsSlice from "../search/tagsSlice";
 import { PostDeleteData, PostFormData, PostsState } from "./postSlice";
 
 const API_URL = "http://localhost:3000";
@@ -29,6 +30,8 @@ export async function createPost(payload: PostFormData) {
         title: post.title,
         body: post.body,
         username: post.username,
+        //what if its an array?
+        tags: post.tags,
       }
     }),
   })
@@ -51,6 +54,8 @@ export async function updatePost(payload: PostFormData) {
         title: post.title,
         body: post.body,
         username: post.username,
+        //what if its an array?
+        tags: post.tags,
       }
     }),
   })

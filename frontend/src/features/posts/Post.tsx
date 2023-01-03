@@ -5,6 +5,7 @@ function Post(props:any) {
     const [title, setTitle] = useState(props.post.title);
     const [body, setBody] = useState(props.post.body);
     const [username, setUsername] = useState(props.post.username);
+    const [tags, setTags] = useState(props.post.tags);
     const [isEditing, setIsEditing] = useState(props.postToEdit === props.post.id);
 
     useEffect(() => {
@@ -18,6 +19,7 @@ function Post(props:any) {
                 id: props.post.id,
                 title: title,
                 body: body,
+                tags: tags,
                 username: username,
             }
         }
@@ -29,11 +31,12 @@ function Post(props:any) {
         setTitle(props.post.title);
         setBody(props.post.body);
         setUsername(props.post.username);
+        setTags(props.post.tags);
     }
 
     const titleElement = <h2 className="title text-start">{props.post.title}</h2>;
     const bodyElement = <p className="card-text text-start">{props.post.body}</p>;
-
+    //add in the tags section
     const editableTitle = <input 
                             type="text" 
                             className="form-control text-start" 
@@ -43,11 +46,14 @@ function Post(props:any) {
                             className="form-control text-start"
                             value={body}
                             onChange={(e) => setBody(e.target.value)} />;
+    //add in the tags section
     const submitButton = <button
                             type="submit"
                             className="form-control"
                             onClick={(e) => submitHandler(e)}>Submit</button>;
     //all the ternary operators below is about whether the user is editing the comment or just viewing it
+    
+    console.log(props.tags);
     return <div>
             <div className="row">
                 <div className="col-8">
@@ -75,9 +81,17 @@ function Post(props:any) {
                     {isEditing ? submitButton : ""}
                 </div>
             </div>
-            <div className="row">
-                Tags:
-            </div>
+
+            {/* playing with this error */}
+            {/* <div className="row">
+                {props.tags[0]}
+            </div> */}
+            
+            {/* <div className="row">
+                {props.tags.map((tag: string) => (
+                    <div>{tag}</div>
+                ))}
+            </div> */}
         </div>;
 }
 

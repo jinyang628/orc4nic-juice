@@ -171,3 +171,16 @@ body{
 .formInput{
     padding-left: 10px;
 }
+
+.setTags, .filterTagsSearchBar{
+    width: 50%
+}
+
+.filterTagsSearchBar{
+    margin-top: 100px;
+}
+
+.tagDelete{
+    border-radius: 8px;
+    margin: 0px 15px 0px 5px;
+}

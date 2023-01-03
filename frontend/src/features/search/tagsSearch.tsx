@@ -1,79 +1,91 @@
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import React, { useState } from 'react';
-import Select, { SingleValue, MultiValue } from 'react-select';
+import { useDispatch } from 'react-redux';
+import Select, { MultiValue } from 'react-select';
+import { updateTags } from './tagsSlice';
 
 type Option = {
+  //string that represents the human-readable label for the option
+  //used to display the option to the user
   label: string; 
+  //string that represents the underlying value for the option 
+  //used to identify the option
   value: string;
 };
 
-function TagsSearch() {
+function TagsSearch({purpose}: {purpose: string}) {
+  const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
+
+  //static list, can change to dynamic later
   const tagsList = ['Bitter Gourd', 'Recipe', 'Orange', 'Apple'];
-  const options = tagsList.map(tag => ({ value: tag, label: tag }));
-  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+  //each tag is transformed into an 'Option' object with a 'label' and 'value' property
+  const options = tagsList.map((tag, index) => ({ value: tag, label: tag }));
+  /*
+  this state variable is initialised with an empty array and will be used to store the 
+  currently selected tags 
+  */
+  const [selectedOptions, setSelectedOptions] = useState<Option[]>(new Array<Option>());
 
-  function handleChange(selectedOption: MultiValue<Option>) {
-    if (selectedOption){
-      setSelectedOptions([...selectedOptions, ...selectedOption]);
-    }
-    
+  //used to update the 'selectedOptions' state variable when tag is selected
+  function handleChange(newOptionsArray: MultiValue<Option>) {
+    const optionsArray = Array.from(newOptionsArray.values());
+    dispatch(updateTags(optionsArray));
+    console.log(optionsArray);
+    setSelectedOptions(optionsArray);
   }
+  
 
-  function handleDelete(index: number) {
-    setSelectedOptions(selectedOptions.filter((_, i) => i !== index));
+  //delete a selected tag from the 'selectedOptions' array using the filter method
+  function handleDelete(value: string) {
+    dispatch(updateTags(selectedOptions.filter((option) => option.value !== value)));
+    setSelectedOptions(selectedOptions.filter((option) => option.value !== value));
   }
-
+  
   return (
-    <>
-      {selectedOptions.map((option, index) => (
-        <span key={index} className="selected-tag">
-          {option.label}
-          <button onClick={() => handleDelete(index)}>x</button>
-        </span>
-      ))}
-      <Select
-        options={options}
-        onChange={handleChange}
-        value={selectedOptions}
-        isMulti
-      />
-    </>
+    <Select
+      className={purpose === "search" ? "filterTagsSearchBar" : "setTags"} 
+      placeholder={purpose === "search" ? "Filter posts" : "Set Tags"}
+      options={options}
+      onChange={handleChange}
+      value={selectedOptions}
+      isMulti
+      components={{
+        MultiValue: ({ data, children, ...props }) => {
+          const dataArray = Object.entries(data);
+          return (
+            <div {...props}>
+              {dataArray.map(([key, value]) => {
+                const option: Option = { value, label: value };
+                return (
+                  <div key={key}>
+                    {option.label}
+                    <button className="tagDelete" onClick={() => handleDelete(option.value)}>x</button>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }
+        // MultiValue: ({ data, children, ...props }) => (
+        //   <div {...props}>
+        //     <div key={selectedOptions.length}>
+        //       {selectedOptions[selectedOptions.length - 1].label}
+        //       <button className="tagDelete" onClick={() => handleDelete(selectedOptions[selectedOptions.length - 1].value)}>x</button>
+        //     </div>
+        //     {selectedOptions.map(option => (
+        //       <div key={option.value}>
+        //         {option.label}
+        //         <button className="tagDelete" onClick={() => handleDelete(option.value)}>x</button>
+        //       </div>
+        //     ))}
+        //   </div>
+        // )
+      }}
+    />
   );
 }
 
 export default TagsSearch;
 
 
-// import React, { useState } from 'react';
-// import Select, { SingleValue } from 'react-select';
-
-// type Option = { value: string };
-
-// export default function TagsSearch() {
-//   const tagsList = ['Bitter Gourd', 'Recipe', 'Orange', 'Apple'];
-//   const options = tagsList.map(tag => ({value: tag}));
-//   const [selectedTag, setSelectedTag] = useState('');
-//   const [selectedOptions, setSelectedOptions] = useState<SingleValue<Option>[]>([]);
-
-//   function handleChange(selectedOption: SingleValue<Option>) {
-//     if (selectedOption) {
-//       setSelectedTag(selectedOption.value);
-//       setSelectedOptions([...selectedOptions, selectedOption]);
-//     }
-//   }
-
-//   return (
-//     <>
-//       <Select
-//         options={options}
-//         onChange={handleChange}
-//       />
-//       <input 
-//         className="filterTags formInput"
-//         type="text" 
-//         placeholder="Filter Posts"
-//         value={selectedTag}
-//       />
-//     </>
-//   );
-// }
 
