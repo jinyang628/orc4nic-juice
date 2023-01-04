@@ -5,7 +5,7 @@ function Post(props:any) {
     const [title, setTitle] = useState(props.post.title);
     const [body, setBody] = useState(props.post.body);
     const [username, setUsername] = useState(props.post.username);
-    const [tags, setTags] = useState(props.post.tags);
+    const [tags, setTags] = useState(props.tags);
     const [isEditing, setIsEditing] = useState(props.postToEdit === props.post.id);
 
     useEffect(() => {
@@ -52,8 +52,6 @@ function Post(props:any) {
                             className="form-control"
                             onClick={(e) => submitHandler(e)}>Submit</button>;
     //all the ternary operators below is about whether the user is editing the comment or just viewing it
-    
-    console.log(props.tags);
     return <div>
             <div className="row">
                 <div className="col-8">
@@ -81,8 +79,19 @@ function Post(props:any) {
                     {isEditing ? submitButton : ""}
                 </div>
             </div>
+            {props.post.tags}
+            {/* {Object.values(props.post.tags).map((tag, index) => (
+                <div key={index}>{(tag as { value: string }).value}</div>
+            ))} */}
 
-            {/* playing with this error */}
+
+        </div>;
+}
+
+export default Post;
+
+
+{/* playing with this error */}
             {/* <div className="row">
                 {props.tags[0]}
             </div> */}
@@ -92,7 +101,3 @@ function Post(props:any) {
                     <div>{tag}</div>
                 ))}
             </div> */}
-        </div>;
-}
-
-export default Post;

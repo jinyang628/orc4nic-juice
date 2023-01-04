@@ -1,5 +1,5 @@
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Select, { MultiValue } from 'react-select';
 import { updateTags } from './tagsSlice';
@@ -13,7 +13,12 @@ type Option = {
   value: string;
 };
 
-function TagsSearch({purpose}: {purpose: string}) {
+type Props = {
+  purpose: string;
+  setTags: Dispatch<SetStateAction<string[]>>;
+};
+
+function TagsSearch({ purpose, setTags }: Props) {
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
 
   //static list, can change to dynamic later
@@ -29,16 +34,20 @@ function TagsSearch({purpose}: {purpose: string}) {
   //used to update the 'selectedOptions' state variable when tag is selected
   function handleChange(newOptionsArray: MultiValue<Option>) {
     const optionsArray = Array.from(newOptionsArray.values());
-    dispatch(updateTags(optionsArray));
-    console.log(optionsArray);
+    const tagsArray = optionsArray.map(option => option.value);
+    setTags(tagsArray);
+    dispatch(updateTags(tagsArray));
     setSelectedOptions(optionsArray);
   }
   
 
   //delete a selected tag from the 'selectedOptions' array using the filter method
   function handleDelete(value: string) {
-    dispatch(updateTags(selectedOptions.filter((option) => option.value !== value)));
-    setSelectedOptions(selectedOptions.filter((option) => option.value !== value));
+    const updatedOptions = selectedOptions.filter((option) => option.value !== value);
+    const updatedTags = updatedOptions.map((option) => option.value);
+    dispatch(updateTags(updatedTags));
+    setTags(updatedTags);
+    setSelectedOptions(updatedOptions);
   }
   
   return (
@@ -49,23 +58,32 @@ function TagsSearch({purpose}: {purpose: string}) {
       onChange={handleChange}
       value={selectedOptions}
       isMulti
-      components={{
-        MultiValue: ({ data, children, ...props }) => {
-          const dataArray = Object.entries(data);
-          return (
-            <div {...props}>
-              {dataArray.map(([key, value]) => {
-                const option: Option = { value, label: value };
-                return (
-                  <div key={key}>
-                    {option.label}
-                    <button className="tagDelete" onClick={() => handleDelete(option.value)}>x</button>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        }
+      // components={{
+      //   MultiValue: ({ data, children, ...props }) => {
+      //     const dataArray = Object.entries(data);
+      //     return (
+      //       <div {...props}>
+      //         {dataArray.map(([key, value]) => {
+      //           const option: Option = { value, label: value };
+      //           return (
+      //             <div key={key}>
+      //               {option.label}
+      //               <button className="tagDelete" onClick={() => handleDelete(option.value)}>x</button>
+      //             </div>
+      //           );
+      //         })}
+      //       </div>
+      //     );
+      //   }
+      // }}
+    />
+  );
+}
+
+export default TagsSearch;
+
+
+
         // MultiValue: ({ data, children, ...props }) => (
         //   <div {...props}>
         //     <div key={selectedOptions.length}>
@@ -80,12 +98,3 @@ function TagsSearch({purpose}: {purpose: string}) {
         //     ))}
         //   </div>
         // )
-      }}
-    />
-  );
-}
-
-export default TagsSearch;
-
-
-

@@ -9,27 +9,21 @@ function PostForm() {
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const signedIn = useSelector((state: RootState) => state.signedIn);
   const activeUsername = useSelector((state: RootState) => state.activeUsername);
-  const activeTags = useSelector((state: RootState) => {
-    //i should see an array of the currently selected tags but i dont
-    // console.log(state.activeTags);
-    return state.activeTags
-  });
+  const activeTags = useSelector((state: RootState) => state.activeTags);
 
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  // const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<string[]>([]);
 
   function submitHandler(e:any) {
     e.preventDefault();
     // ERROR debugging delete later
-    // i should see an array of the currently selected tags but i dont
-    // console.log(activeTags);
     const formData = {
       post: {
         title: title,
         body: body,
         username: activeUsername,
-        tags: activeTags,
+        tags: tags,
       }
     }
     dispatch(createPostAsync(formData));
@@ -39,7 +33,7 @@ function PostForm() {
   function resetState() {
     setTitle('');
     setBody('');
-    // setTags([]);
+    setTags([]);
   }
   
   return <div>
@@ -61,7 +55,7 @@ function PostForm() {
         />
       <TagsSearch
         purpose="setTags"
-        //if i add this i need to modify TagsSearch as well)
+        setTags={setTags}
       />
       <button
         type="submit"

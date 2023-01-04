@@ -15,7 +15,7 @@ function Posts() {
   const activeTags = useSelector((state: RootState) => state.activeTags);
   const dispatch = useDispatch<ThunkDispatch<{}, void, AnyAction>>();
   const [postToEdit, setPostToEdit] = useState(0);
-
+  
   useEffect(() => {
     dispatch(fetchPostsAsync());
   }, [dispatch])
@@ -44,10 +44,11 @@ function Posts() {
       contents = <div className="card">
         <div className="card-body">
             <PostForm/>
-            <TagsSearch
+            {/* <TagsSearch
               //need add new prop? 
+              setTags={setTags}
               purpose={"search"}
-            />
+            /> */}
             {posts && posts.length > 0 && posts.map(post => {
                 return <div key={post.id} style={{margin:"5em"}}>
                     <Post 

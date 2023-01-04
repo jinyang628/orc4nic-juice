@@ -19,7 +19,6 @@ export async function fetchPosts() {
 
 export async function createPost(payload: PostFormData) {
   const post = payload.post;
-  //DELETE AFTER TROUBLESHOOTING: Username correctly recorded
   return fetch(`${API_URL}/posts.json`, {
     method: "POST",
     headers: {
@@ -30,7 +29,6 @@ export async function createPost(payload: PostFormData) {
         title: post.title,
         body: post.body,
         username: post.username,
-        //what if its an array?
         tags: post.tags,
       }
     }),
@@ -54,7 +52,6 @@ export async function updatePost(payload: PostFormData) {
         title: post.title,
         body: post.body,
         username: post.username,
-        //what if its an array?
         tags: post.tags,
       }
     }),

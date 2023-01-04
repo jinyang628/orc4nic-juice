@@ -70,11 +70,13 @@ export const fetchPostsAsync = createAsyncThunk(
     }
 )
 
+//createPostAsync is an async thunk that makes an API call to create a new post 
 export const createPostAsync = createAsyncThunk(
     'posts/createPost',
+    //receives a PostFormData object as payload, which contains the data for the new post
     async (payload: PostFormData) => {
         const response = await createPost(payload);
-
+        //when the action is dispatched, it returns a promise that resolves to the API response
         return response;
     }
 )
@@ -120,19 +122,27 @@ export const postSlice = createSlice({
             })
             
             /** Create Section */
+            //pending status mean the API call is still being made
             .addCase(createPostAsync.pending, (state) => {
+                // status field in the state will be set to Statuses.Loading
                 return produce(state, (draftState) => {
                     draftState.status = Statuses.Loading;
                 })
             })
+            //fulfilled status means the API call has completed successfully and 
+            //action has received a response
             .addCase(createPostAsync.fulfilled, (state, action) => {
                 return produce(state, (draftState) => {
+                    //new post data from the action's payload will be added to the posts array in the state
                     draftState.posts.push(action.payload);
+                    //status filed in the state will be set to Statuses.UpToDate
                     draftState.status = Statuses.UpToDate;
                 })
-            })            
+            })       
+            //rejected status means the API call has failed     
             .addCase(createPostAsync.rejected, (state) => {
                 return produce(state, (draftState) => {
+                    //status filed in the state will be set to Statuses.Error
                     draftState.status = Statuses.Error;
                 })
             })
@@ -162,14 +172,13 @@ export const postSlice = createSlice({
                 })
             })
             .addCase(updatePostAsync.fulfilled, (state, action) => {
+                const { id, tags } = action.payload;
+                const index = state.posts.findIndex(post => post.id === id);
                 return produce(state, (draftState) => {
-                    const index = draftState.posts.findIndex(
-                        post => post.id === action.payload.id
-                    );
-                    draftState.posts[index] = action.payload;
-                    draftState.status = Statuses.UpToDate;
-                })
-            })            
+                  draftState.posts[index].tags = tags;
+                  draftState.status = Statuses.UpToDate;
+                });
+              })          
             .addCase(updatePostAsync.rejected, (state) => {
                 return produce(state, (draftState) => {
                     draftState.status = Statuses.Error;
