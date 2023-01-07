@@ -3,7 +3,7 @@ import React from 'react'
 function Sales() {
   return (
     <div>
-      Sales
+      For future project
     </div>
   )
 }
